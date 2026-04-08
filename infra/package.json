@@ -1,0 +1,21 @@
+{
+  "name": "infra",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "build": "tsc",
+    "deploy": "cdk deploy --all",
+    "deploy:local": "cdklocal deploy --all",
+    "watch:local": "cdklocal watch"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.147.0",
+    "constructs": "^10.3.0"
+  },
+  "devDependencies": {
+    "aws-cdk": "^2.147.0",
+    "aws-cdk-local": "^2.21.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.4.0"
+  }
+}
