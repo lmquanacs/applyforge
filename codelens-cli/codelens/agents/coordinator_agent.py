@@ -82,7 +82,7 @@ Project hint: {context['hint']}
 {readme_section}{config_section}
 
 Worker Summaries:
-{summaries_text[:30000]}
+{summaries_text[:15000]}
 
 Generate the report with these sections:
 1. Project Title & Executive Summary
@@ -95,7 +95,7 @@ Generate the report with these sections:
 
         response = self.client.messages.create(
             model=self.coord_config["model"],
-            max_tokens=4096,
+            max_tokens=2048,
             temperature=self.coord_config["temperature"],
             system="You are a senior software architect generating project documentation.",
             messages=[{"role": "user", "content": prompt}],

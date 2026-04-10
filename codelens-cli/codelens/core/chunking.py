@@ -2,6 +2,7 @@ import os
 import fnmatch
 from dataclasses import dataclass
 from typing import List
+from codelens.core.compressor import compress
 
 
 SPRING_PRIORITY_ANNOTATIONS = [
@@ -33,12 +34,16 @@ def collect_chunks(root: str, hint: str, ignore_patterns: List[str]) -> List[Fil
         if os.path.exists(src_root):
             for path in _walk_files(src_root, [".java"], ignore_patterns):
                 content = _safe_read(path)
+                ext = os.path.splitext(path)[1]
+                compressed = compress(content, ext)
                 priority = _spring_priority(content)
-                chunks.append(FileChunk(path=path, content=content, priority=priority))
+                chunks.append(FileChunk(path=path, content=compressed, priority=priority))
     else:
         for path in _walk_files(root, [".py", ".js", ".ts", ".java", ".go", ".rb"], ignore_patterns):
             content = _safe_read(path)
-            chunks.append(FileChunk(path=path, content=content, priority=0))
+            ext = os.path.splitext(path)[1]
+            compressed = compress(content, ext)
+            chunks.append(FileChunk(path=path, content=compressed, priority=0))
 
     chunks.sort(key=lambda c: c.priority, reverse=True)
     return chunks

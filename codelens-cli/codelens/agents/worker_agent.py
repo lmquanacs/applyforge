@@ -15,7 +15,7 @@ class WorkerAgent:
 
         response = self.client.messages.create(
             model=self.config["model"],
-            max_tokens=1024,
+            max_tokens=512,
             temperature=self.config["temperature"],
             system=self._system_prompt(hint),
             messages=[{"role": "user", "content": self._build_prompt(chunk)}],
@@ -39,4 +39,4 @@ class WorkerAgent:
         )
 
     def _build_prompt(self, chunk: FileChunk) -> str:
-        return f"File: {chunk.path}\n\n```\n{chunk.content[:8000]}\n```"
+        return f"File: {chunk.path}\n\n```\n{chunk.content}\n```"

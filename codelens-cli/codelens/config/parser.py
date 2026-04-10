@@ -11,7 +11,7 @@ DEFAULT_CONFIG = {
     "agents": {
         "coordinator": {
             "provider": "anthropic",
-            "model": "claude-opus-4-5",
+            "model": "claude-haiku-4-5",
             "temperature": 0.2,
         },
         "worker": {
