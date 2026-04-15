@@ -61,18 +61,19 @@ This writes the default config to `~/.config/career-ai/config.yaml`:
 
 ```yaml
 model:
-  default: "gpt-4o"
-  fallback: "claude-3-5-sonnet-20241022"
+  default: "gpt-4.1"
+  fallback: "gpt-4o"
   temperature: 0.1
 
 tokens:
   max_input_limit: 16000
-  max_output_limit: 2000
+  max_output_limit: 4000
   warn_cost_threshold: 0.10
 
 app:
   log_usage: true
   usage_db_path: "~/.config/career-ai/usage.db"
+  max_cover_letter_words: 120
 ```
 
 ### Step 3 — Set your preferred model
@@ -80,8 +81,8 @@ app:
 Use `career-ai config set <key> <value>` to update any config field:
 
 ```bash
-career-ai config set model.default gpt-4o
-career-ai config set model.fallback gpt-4o-mini
+career-ai config set model.default gpt-4.1
+career-ai config set model.fallback gpt-4o
 ```
 
 ---
@@ -96,8 +97,8 @@ Career AI uses [LiteLLM](https://github.com/BerriAI/litellm) as the routing laye
 # .env
 OPENAI_API_KEY=<your_openai_api_key>
 
-career-ai config set model.default gpt-4o
-career-ai config set model.fallback gpt-4o-mini
+career-ai config set model.default gpt-4.1
+career-ai config set model.fallback gpt-4o
 ```
 
 Supported model names: `gpt-4.1`, `gpt-4o`, `gpt-4o-mini`, `gpt-4-turbo`, `gpt-3.5-turbo`
@@ -155,9 +156,9 @@ Supported model names: `ollama/llama3`, `ollama/mistral`, `ollama/codellama`, or
 You can override the configured model for any single command using `--model`:
 
 ```bash
-career-ai review ./my_cv.pdf --model gpt-4o-mini
-career-ai write ./my_cv.pdf --jd ./jd.txt --model claude-3-5-sonnet-20241022
-career-ai polish ./my_cv.pdf --model ollama/llama3
+career-ai cv review ./my_cv.pdf --model gpt-4o-mini
+career-ai coverletter write ./my_cv.pdf --jd ./jd.txt --model claude-3-5-sonnet-20241022
+career-ai cv polish ./my_cv.pdf --model ollama/llama3
 ```
 
 ---
@@ -167,15 +168,15 @@ career-ai polish ./my_cv.pdf --model ollama/llama3
 ### Review a CV
 
 ```bash
-career-ai review ./my_cv.pdf
+career-ai cv review ./my_cv.pdf
 ```
 
 Outputs a structured Markdown report with score, strengths, gaps, and rewrite suggestions.
 
 ```bash
 # Supported input formats: .pdf, .docx, .md, .txt
-career-ai review ./my_cv.docx
-career-ai review ./my_cv.md
+career-ai cv review ./my_cv.docx
+career-ai cv review ./my_cv.md
 ```
 
 ---
@@ -183,7 +184,7 @@ career-ai review ./my_cv.md
 ### Polish a CV
 
 ```bash
-career-ai polish ./my_cv.pdf --out output/polished_cv.md
+career-ai cv polish ./my_cv.pdf --out output/polished_cv.md
 ```
 
 Options:
@@ -197,9 +198,9 @@ Options:
 
 ```bash
 # Polish and export both .md and .pdf
-career-ai polish ./my_cv.pdf --pdf
+career-ai cv polish ./my_cv.pdf --pdf
 
-career-ai polish ./my_cv.pdf --tone executive --focus leadership --out output/polished_cv.md --pdf
+career-ai cv polish ./my_cv.pdf --tone executive --focus leadership --out output/polished_cv.md --pdf
 ```
 
 ---
@@ -207,17 +208,17 @@ career-ai polish ./my_cv.pdf --tone executive --focus leadership --out output/po
 ### Generate a Cover Letter
 
 ```bash
-career-ai write ./my_cv.pdf --jd ./jd.txt --out output/cover_letter.md
+career-ai coverletter write ./my_cv.pdf --jd ./jd.txt --out output/cover_letter.md
 ```
 
 The `--jd` flag accepts a file path or a raw string:
 
 ```bash
 # From a file
-career-ai write ./my_cv.pdf --jd ./jd.txt
+career-ai coverletter write ./my_cv.pdf --jd ./jd.txt
 
 # As a raw string
-career-ai write ./my_cv.pdf --jd "We need a Python developer with 5 years experience..."
+career-ai coverletter write ./my_cv.pdf --jd "We need a Python developer with 5 years experience..."
 ```
 
 Options:
@@ -237,9 +238,9 @@ Options:
 Add `--dry-run` or `-d` to any command to see the token count, estimated cost, and full prompt — without making an API call:
 
 ```bash
-career-ai review ./my_cv.pdf --dry-run
-career-ai write ./my_cv.pdf --jd ./jd.txt --dry-run
-career-ai polish ./my_cv.pdf --dry-run
+career-ai cv review ./my_cv.pdf --dry-run
+career-ai coverletter write ./my_cv.pdf --jd ./jd.txt --dry-run
+career-ai cv polish ./my_cv.pdf --dry-run
 ```
 
 ---
@@ -278,8 +279,8 @@ All successful requests are logged to `~/.config/career-ai/usage.db` (SQLite) wi
 All generated files are saved to the `output/` folder by default. Both `.md` and `.pdf` are supported:
 
 ```bash
-career-ai write ./my_cv.pdf --jd ./jd.txt --out output/cover_letter.pdf
-career-ai polish ./my_cv.pdf --out output/polished_cv.md --pdf
+career-ai coverletter write ./my_cv.pdf --jd ./jd.txt --out output/cover_letter.pdf
+career-ai cv polish ./my_cv.pdf --out output/polished_cv.md --pdf
 ```
 
 ---

@@ -18,7 +18,13 @@ from career_ai.utils.logging import console
 from career_ai.utils.output import save_output, export_cv_pdf
 
 app = typer.Typer(help="Career AI — automated CV feedback, polishing, and cover letter writing.")
+
+cv_app = typer.Typer(help="CV commands: review and polish.")
+coverletter_app = typer.Typer(help="Cover letter commands.")
 config_app = typer.Typer(help="Manage configuration.")
+
+app.add_typer(cv_app, name="cv")
+app.add_typer(coverletter_app, name="coverletter")
 app.add_typer(config_app, name="config")
 
 
@@ -36,8 +42,8 @@ def config_set(key: str, value: str):
     console.print(f"[green]Set[/] {key} = {value}")
 
 
-@app.command()
-def review(
+@cv_app.command("review")
+def cv_review(
     cv_file: Path = typer.Argument(..., help="Path to CV file (.pdf, .docx, .md, .txt)"),
     model: Optional[str] = typer.Option(None, help="Override model"),
     dry_run: bool = typer.Option(False, "--dry-run", "-d", help="Preview without API call"),
@@ -52,8 +58,8 @@ def review(
     console.print(Markdown(result))
 
 
-@app.command()
-def polish(
+@cv_app.command("polish")
+def cv_polish(
     cv_file: Path = typer.Argument(..., help="Path to CV file"),
     out: Path = typer.Option(Path("output/polished_cv.md"), "--out", help="Output file path"),
     pdf: bool = typer.Option(False, "--pdf", help="Also export a styled PDF to output/polished_cv.pdf"),
@@ -81,8 +87,8 @@ def polish(
         console.print(f"[green]PDF exported to[/] {pdf_path}")
 
 
-@app.command()
-def write(
+@coverletter_app.command("write")
+def coverletter_write(
     cv_file: Path = typer.Argument(..., help="Path to CV file"),
     jd: str = typer.Option(..., "--jd", help="Path to JD file or raw JD text"),
     out: Path = typer.Option(Path("output/cover_letter.md"), "--out", help="Output file path"),
