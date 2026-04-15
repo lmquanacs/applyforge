@@ -14,3 +14,4 @@ tokens:
 app:
   log_usage: true
   usage_db_path: "~/.config/career-ai/usage.db"
+  max_cover_letter_words: 120

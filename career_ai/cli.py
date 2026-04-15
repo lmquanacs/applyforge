@@ -98,7 +98,7 @@ def write(
         jd_path = Path(jd)
         jd_text = extract(jd_path) if jd_path.exists() else jd
 
-    system, user = build_cover_letter_prompt(cv_text, jd_text, tone)
+    system, user = build_cover_letter_prompt(cv_text, jd_text, tone, config.app.max_cover_letter_words)
     result = call_llm(system, user, config, model=model, dry_run=dry_run)
     result = _strip_code_fence(result)
 

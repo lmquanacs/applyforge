@@ -13,10 +13,14 @@ Rules (strictly enforced):
 """
 
 
-def build_cover_letter_prompt(cv_text: str, jd_text: str, tone: str) -> tuple[str, str]:
+def build_cover_letter_prompt(cv_text: str, jd_text: str, tone: str, max_words: int = 120) -> tuple[str, str]:
+    system = (
+        _SYSTEM_PROMPT +
+        f"- The cover letter body MUST NOT exceed {max_words} words. Be concise and impactful.\n"
+    )
     user = (
         f"Tone: {tone}\n\n"
         f"--- JOB DESCRIPTION ---\n{jd_text}\n\n"
         f"--- CANDIDATE CV ---\n{cv_text}"
     )
-    return _SYSTEM_PROMPT, user
+    return system, user

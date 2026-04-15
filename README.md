@@ -228,6 +228,8 @@ Options:
 | `--out` | `output/cover_letter.md` | Output file (`.md` or `.pdf`) |
 | `--tone` | `professional` | `formal`, `startup/casual`, `confident` |
 
+> The cover letter body is capped at `app.max_cover_letter_words` (default: 120 words). Override with `career-ai config set app.max_cover_letter_words 200`.
+
 ---
 
 ### Dry Run (preview before spending)
@@ -251,6 +253,11 @@ tokens:
   max_input_limit: 16000    # Aborts if input exceeds this token count
   max_output_limit: 4000    # Hard cap on generated output length
   warn_cost_threshold: 0.10 # Prints a warning if estimated cost exceeds $0.10
+
+app:
+  log_usage: true
+  usage_db_path: "~/.config/career-ai/usage.db"
+  max_cover_letter_words: 120  # Hard cap on cover letter body length
 ```
 
 Update via CLI:
@@ -259,6 +266,7 @@ Update via CLI:
 career-ai config set tokens.max_input_limit 8000
 career-ai config set tokens.max_output_limit 4000
 career-ai config set tokens.warn_cost_threshold 0.05
+career-ai config set app.max_cover_letter_words 200
 ```
 
 All successful requests are logged to `~/.config/career-ai/usage.db` (SQLite) with timestamp, model, token counts, and cost.

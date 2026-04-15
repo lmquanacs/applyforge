@@ -29,6 +29,7 @@ class TokenConfig(BaseModel):
 class AppConfig(BaseModel):
     log_usage: bool = True
     usage_db_path: str = "~/.config/career-ai/usage.db"
+    max_cover_letter_words: int = 120
 
 
 class Config(BaseModel):
