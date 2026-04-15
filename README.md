@@ -21,7 +21,7 @@ cd career-ai
 make setup
 ```
 
-This creates a `venv/`, installs all dependencies, and copies `.env.example` → `.env`.
+This creates a `venv/`, installs all dependencies, installs the `career-ai` command, and copies `.env.example` → `.env`.
 
 Then activate the environment:
 

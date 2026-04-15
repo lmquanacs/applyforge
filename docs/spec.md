@@ -262,7 +262,7 @@ career-ai/
 
 | Target | Description |
 |--------|-------------|
-| `make setup` | Creates the `venv`, upgrades `pip`, installs dependencies, and creates `.env` from `.env.example` if absent. |
+| `make setup` | Creates the `venv`, upgrades `pip`, installs dependencies, installs the `career-ai` command, and creates `.env` from `.env.example` if absent. |
 | `make test` | Runs the test suite using `pytest`. |
 | `make lint` | Runs code formatting and linting tools (`black`, `flake8`, `mypy`). |
 | `make clean` | Removes `__pycache__`, `.pytest_cache`, built artifacts, and optionally the `venv` directory. |
