@@ -1,0 +1,16 @@
+# Model Settings
+model:
+  default: "gpt-4o"
+  fallback: "claude-3-5-sonnet-20241022"
+  temperature: 0.1
+
+# Token & Cost Management
+tokens:
+  max_input_limit: 16000
+  max_output_limit: 2000
+  warn_cost_threshold: 0.10
+
+# Application Settings
+app:
+  log_usage: true
+  usage_db_path: "~/.config/career-ai/usage.db"
