@@ -15,3 +15,7 @@ app:
   log_usage: true
   usage_db_path: "~/.config/career-ai/usage.db"
   max_cover_letter_words: 120
+  chat_session_id: "default"
+  vault_top_k: 8
+  working_dir: "~/Documents/career-ai"   # default directory for CV files and outputs
+  default_cv_path: ""                     # set to a specific file to skip typing it every time

@@ -30,6 +30,10 @@ class AppConfig(BaseModel):
     log_usage: bool = True
     usage_db_path: str = "~/.config/career-ai/usage.db"
     max_cover_letter_words: int = 120
+    chat_session_id: str = "default"
+    vault_top_k: int = 8
+    working_dir: str = "~/Documents/career-ai"
+    default_cv_path: str = ""  # e.g. ~/Documents/career-ai/my_cv.pdf
 
 
 class Config(BaseModel):
@@ -40,6 +44,23 @@ class Config(BaseModel):
     @property
     def usage_db(self) -> Path:
         return Path(self.app.usage_db_path).expanduser()
+
+    @property
+    def working_dir_path(self) -> Path:
+        p = Path(self.app.working_dir).expanduser()
+        p.mkdir(parents=True, exist_ok=True)
+        return p
+
+    @property
+    def default_cv(self) -> Path | None:
+        if self.app.default_cv_path:
+            return Path(self.app.default_cv_path).expanduser()
+        # Auto-discover: look for a single PDF/DOCX in working_dir
+        candidates = [
+            *self.working_dir_path.glob("*.pdf"),
+            *self.working_dir_path.glob("*.docx"),
+        ]
+        return candidates[0] if len(candidates) == 1 else None
 
 
 def init_config() -> Path:
